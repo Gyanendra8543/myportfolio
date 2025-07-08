@@ -1,28 +1,34 @@
-import React from 'react';
+ import React, { useRef, useEffect } from 'react';
+import Collapse from 'bootstrap/js/dist/collapse'; // ✅ Bootstrap Collapse control
 
 const Navbar = ({ setActiveSection }) => {
+  const collapseRef = useRef(null);
+  let bsCollapse = null;
+
+  useEffect(() => {
+    if (collapseRef.current) {
+      bsCollapse = new Collapse(collapseRef.current, { toggle: false });
+    }
+  }, []);
+
   const handleNavItemClick = (section) => {
     setActiveSection(section);
 
-    // ✅ Scroll smoothly to the target section
+    // ✅ Scroll to section smoothly
     const el = document.getElementById(section);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // ✅ Manually close the mobile navbar after click
-    const navbarToggler = document.querySelector('.navbar-toggler');
-    const navbarCollapse = document.querySelector('#navbarNav');
-
-    if (navbarToggler && navbarCollapse.classList.contains('show')) {
-      navbarToggler.click(); // This will collapse the menu
+    // ✅ Close collapse if open (on nav link click)
+    if (bsCollapse && collapseRef.current.classList.contains('show')) {
+      bsCollapse.hide();
     }
   };
 
   return (
     <nav className="navbar navbar-expand-lg sticky-top bg-white shadow-sm">
       <div className="container-fluid px-4">
-        {/* 🔹 Stylish Title */}
         <span
           className="navbar-brand text-uppercase text-primary fw-semibold"
           style={{
@@ -34,7 +40,6 @@ const Navbar = ({ setActiveSection }) => {
           Software Developer
         </span>
 
-        {/* 🔸 Mobile Toggle */}
         <button
           className="navbar-toggler"
           type="button"
@@ -47,8 +52,11 @@ const Navbar = ({ setActiveSection }) => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* 🔸 Collapsible Nav */}
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div
+          className="collapse navbar-collapse"
+          id="navbarNav"
+          ref={collapseRef}
+        >
           <ul className="navbar-nav ms-auto gap-3">
             {[
               { label: 'Home', value: 'home' },
