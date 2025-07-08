@@ -1,6 +1,24 @@
 import React from 'react';
 
 const Navbar = ({ setActiveSection }) => {
+  const handleNavItemClick = (section) => {
+    setActiveSection(section);
+
+    // ✅ Scroll smoothly to the target section
+    const el = document.getElementById(section);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ✅ Manually close the mobile navbar after click
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.querySelector('#navbarNav');
+
+    if (navbarToggler && navbarCollapse.classList.contains('show')) {
+      navbarToggler.click(); // This will collapse the menu
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg sticky-top bg-white shadow-sm">
       <div className="container-fluid px-4">
@@ -41,7 +59,7 @@ const Navbar = ({ setActiveSection }) => {
             ].map((item, index) => (
               <li key={index} className="nav-item">
                 <button
-                  onClick={() => setActiveSection(item.value)}
+                  onClick={() => handleNavItemClick(item.value)}
                   className="nav-link btn btn-link text-dark"
                   style={{
                     textDecoration: 'none',
