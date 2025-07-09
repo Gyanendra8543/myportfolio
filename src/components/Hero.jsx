@@ -37,14 +37,26 @@ const Hero = ({ setActiveSection }) => {
           className="lead d-block mb-4 text-animated"
         />
 
-        {/* 🔹 CTA Button */}
-        <button
-          onClick={scrollToProjects}
-          className="btn btn-primary btn-lg shadow-sm stylish-btn"
-          aria-label="Scroll to Projects"
-        >
-          See My Projects
-        </button>
+        {/* 🔹 CTA Buttons */}
+        <div className="d-flex flex-column align-items-center gap-3">
+          <button
+            onClick={scrollToProjects}
+            className="btn btn-primary btn-lg shadow-sm stylish-btn"
+            aria-label="Scroll to Projects"
+          >
+            See My Projects
+          </button>
+
+          {/* 🔽 Updated Resume Button */}
+          <a
+            href="/Gyanendra_Mishra Resume.pdf"
+            download
+            className="btn btn-outline-dark btn-lg shadow-sm stylish-btn"
+            aria-label="Download Resume"
+          >
+            Download Resume
+          </a>
+        </div>
       </div>
     </section>
   );
